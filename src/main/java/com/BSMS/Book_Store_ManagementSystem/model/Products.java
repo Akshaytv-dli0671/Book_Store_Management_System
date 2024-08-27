@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Table(name="products_table")
 public class Products {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
