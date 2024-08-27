@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+
 @Table(name = "users_table")
 @Entity
 @Data
@@ -35,5 +37,7 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Cart cart;
+    @OneToMany(mappedBy = "user")
+    private List<Customer_Details> customerDetails;
 
 }
