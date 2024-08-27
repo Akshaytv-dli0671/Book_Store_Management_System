@@ -17,18 +17,19 @@ import java.time.LocalDateTime;
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long adminId;
 
+    @Column(unique = true)
     @NotNull(message = "username is mandatory")
     private String adminUsername;
 
-@NotNull(message = "Email is mandatory")
+    @NotNull(message = "Email is mandatory")
     private String adminEmail;
 
-@NotNull(message = "Password is mandatory")
+    @NotNull(message = "Password is mandatory")
     private String adminPassword;
 
-@NotNull(message = "created_at is mandatory")
+    @NotNull(message = "created_at is mandatory")
     private Timestamp created_at;
 
 }
