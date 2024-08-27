@@ -34,4 +34,9 @@ public class Products {
 
     private Timestamp updatedAt;
 
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private CartItem cartItem;
+
+
+
 }

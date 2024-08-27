@@ -13,16 +13,15 @@ import lombok.NoArgsConstructor;
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long cartItem_id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
-//    @ManyToOne
-//    @JoinColumn(name = "product_id", nullable = false)
-//    private Product product;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Products product;
 
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    private int quantity;
 }

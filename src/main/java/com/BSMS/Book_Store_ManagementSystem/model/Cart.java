@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -17,12 +18,17 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cart_id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @NotNull(message = "Created date is required")
     private Timestamp cart_created_at;
+
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems;
+
+
 
 
 }
