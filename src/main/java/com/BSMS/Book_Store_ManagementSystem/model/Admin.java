@@ -20,6 +20,7 @@ public class Admin {
     private Long id;
 
     @NotNull(message = "username is mandatory")
+    @Column(unique = true)
     private String adminUsername;
 
 @NotNull(message = "Email is mandatory")

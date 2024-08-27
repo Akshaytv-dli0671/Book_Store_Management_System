@@ -21,6 +21,7 @@ public class User {
     private Long user_id;
 
     @NotNull(message = "User Name is required")
+    @Column(unique = true)
     private String user_name;
 
     @NotNull(message = "User Email is required")
