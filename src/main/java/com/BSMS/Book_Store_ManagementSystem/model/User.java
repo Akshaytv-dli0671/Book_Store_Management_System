@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 @Table(name = "users_table")
 @Entity
@@ -28,6 +30,6 @@ public class User {
     private String user_password;
 
     @NotNull(message = "Created date is required")
-    private Date user_created_at;
+    private Timestamp user_created_at;
 
 }
