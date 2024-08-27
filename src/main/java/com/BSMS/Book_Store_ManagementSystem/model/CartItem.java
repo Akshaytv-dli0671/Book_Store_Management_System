@@ -1,5 +1,7 @@
 package com.BSMS.Book_Store_ManagementSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "cart_item_table")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "cartItem_id")
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,6 +25,5 @@ public class CartItem {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", nullable = false)
     private Products product;
-
     private int quantity;
 }

@@ -1,6 +1,7 @@
 package com.BSMS.Book_Store_ManagementSystem.service;
 
 import com.BSMS.Book_Store_ManagementSystem.exception.CustomException;
+import com.BSMS.Book_Store_ManagementSystem.model.Cart;
 import com.BSMS.Book_Store_ManagementSystem.model.User;
 import com.BSMS.Book_Store_ManagementSystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

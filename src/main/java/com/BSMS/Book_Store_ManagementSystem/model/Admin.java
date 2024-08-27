@@ -19,7 +19,7 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long adminId;
 
-    @Column(unique = true)
+
     @NotNull(message = "username is mandatory")
     @Column(unique = true)
     private String adminUsername;
