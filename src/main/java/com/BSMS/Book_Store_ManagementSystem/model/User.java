@@ -32,4 +32,7 @@ public class User {
     @NotNull(message = "Created date is required")
     private Timestamp user_created_at;
 
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
 }
