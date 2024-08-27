@@ -13,4 +13,9 @@ public class GlobalException {
         log.error("CustomException: {}", ex.getMessage());
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(CustomInvalidException.class)
+    public ResponseEntity<String> employeeNotFoundException(CustomInvalidException exception){
+        return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
+    }
 }
