@@ -3,6 +3,8 @@ package com.BSMS.Book_Store_ManagementSystem.controller;
 import com.BSMS.Book_Store_ManagementSystem.model.Wishlist;
 import com.BSMS.Book_Store_ManagementSystem.model.WishlistItem;
 import com.BSMS.Book_Store_ManagementSystem.service.WishlistService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +18,16 @@ public class WishlistController {
     @Autowired
     private WishlistService wishlistService;
 
-    @PostMapping("/add_wish_list/{id}")
-    public ResponseEntity<Wishlist> AddproducttoWishlist(@RequestParam Long user_id, @PathVariable Long id) {
+    @PostMapping("/add_wish_list")
+    public ResponseEntity<Wishlist> AddproducttoWishlist(@RequestParam Long user_id, @RequestParam Long id) {
         Wishlist wishlist = wishlistService.AddproducttoWishlist(user_id, id);
         return ResponseEntity.ok(wishlist);
     }
     @Autowired
     private WishlistService wishlistItemsService;
 
-    @DeleteMapping("/remove_wishlist_item/{product_id}")
-    public ResponseEntity<String> removeWishlistItem(@PathVariable Long id) {
+    @DeleteMapping("/remove_wishlist_item")
+    public ResponseEntity<String> removeWishlistItem(@RequestParam Long id) {
         wishlistItemsService.removeWishlistItem(id);
         return new ResponseEntity<>("Wishlist item removed successfully", HttpStatus.OK);
     }
