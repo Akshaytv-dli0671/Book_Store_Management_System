@@ -1,5 +1,6 @@
 package com.BSMS.Book_Store_ManagementSystem.controller;
 
+import com.BSMS.Book_Store_ManagementSystem.model.Cart;
 import com.BSMS.Book_Store_ManagementSystem.model.CartItem;
 import com.BSMS.Book_Store_ManagementSystem.service.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,10 @@ public class CartItemController {
     @Autowired
     CartItemService cartItemService;
 
+
     @PostMapping("/add_cart_item/{id}")
-    public ResponseEntity<String> addCartItem(@PathVariable("id") Long product_id) {
-        return cartItemService.addCartItem(product_id);
+    public ResponseEntity<String> addCartItem(@PathVariable("id") Long product_id,@RequestParam("userid")Long userid) {
+        return cartItemService.addCartItem(product_id,userid);
     }
     @PutMapping("/cartItem_quantity/{cart_itemId}")
     public ResponseEntity<String> updateCartItemQuantity(@PathVariable Long cart_itemId, @RequestParam int quantity) {

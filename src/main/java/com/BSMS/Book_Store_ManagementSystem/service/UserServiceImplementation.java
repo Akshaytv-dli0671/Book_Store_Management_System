@@ -3,11 +3,14 @@ package com.BSMS.Book_Store_ManagementSystem.service;
 import com.BSMS.Book_Store_ManagementSystem.exception.CustomException;
 import com.BSMS.Book_Store_ManagementSystem.model.Cart;
 import com.BSMS.Book_Store_ManagementSystem.model.User;
+import com.BSMS.Book_Store_ManagementSystem.repository.CartRepository;
 import com.BSMS.Book_Store_ManagementSystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 
 @Service
@@ -19,7 +22,10 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    CartRepository cartRepository;
 
+    @Transactional
     @Override
     public User registerUser(User user) {
         user.setUser_password(passwordEncoder.encode(user.getUser_password()));
@@ -27,7 +33,12 @@ public class UserServiceImplementation implements UserService {
         if (userRepository.findByUsername(username) != null) {
             throw new CustomException("User with this Username already exists.");
         }
-        return userRepository.save(user);
+        User saveUser=userRepository.save(user);
+        Cart cart = new Cart();
+        cart.setUser(saveUser);
+        cart.setCart_created_at(new Timestamp(System.currentTimeMillis()));
+        cartRepository.save(cart);
+        return saveUser;
     }
 
     @Override
