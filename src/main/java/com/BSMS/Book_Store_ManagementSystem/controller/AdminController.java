@@ -28,14 +28,16 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginAdmin(@RequestBody Admin admin) {
+    public ResponseEntity<Object> loginAdmin(@RequestBody Admin admin) {
         boolean isAuthenticated = adminService.authenticateAdmin(admin.getAdminUsername(), admin.getAdminPassword());
         if (isAuthenticated) {
-            return ResponseEntity.ok("Login successful");
+            String token = adminService.generateToken(admin.getAdminUsername());
+            return new ResponseEntity<>("Login sucess , Token --> "+token, HttpStatus.OK);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
+
 
     @PostMapping("/add/book")
     public ResponseEntity<Products> addProduct(@Valid @RequestBody Products product) {
@@ -43,22 +45,23 @@ public class AdminController {
     }
 
     @PutMapping("/update/book/{product_id}")
-    public ResponseEntity<Products> updateProduct(@PathVariable long id,@RequestBody Products product) {
+    public ResponseEntity<Object> updateProduct(@PathVariable("product_id") long id,@RequestBody Products product) {
         if (productService.getAllProducts().stream().noneMatch(p -> p.getId() == id)) {
             throw new ProductNotFoundException("Product with id " + id + " not found");
         } else {
             product.setId(id);
-            return new ResponseEntity<>(productService.updateProduct(product), HttpStatus.OK);
+            productService.updateProduct(product);
+            return new ResponseEntity<>("Updated Successfully", HttpStatus.OK);
         }
     }
 
     @DeleteMapping("/delete/book/{product_id}")
-    public ResponseEntity<Object> deleteProduct(@PathVariable long id) {
+    public ResponseEntity<Object> deleteProduct(@PathVariable("product_id") long id) {
         if (productService.getAllProducts().stream().noneMatch(product -> product.getId() == id)) {
             throw new ProductNotFoundException("Product with id " + id + " not found");
         }else {
             productService.deleteProduct(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("Deleted Successfully",HttpStatus.NO_CONTENT);
         }
     }
 }
