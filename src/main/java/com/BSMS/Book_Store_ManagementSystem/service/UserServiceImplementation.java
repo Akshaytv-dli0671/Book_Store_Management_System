@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,7 @@ public class UserServiceImplementation implements UserService {
     @Transactional
     @Override
     public User registerUser(User user) {
+        user.setUser_created_at(Timestamp.valueOf(LocalDateTime.now()));
         user.setUser_password(passwordEncoder.encode(user.getUser_password()));
         String username = user.getUser_name();
         if (userRepository.findByUsername(username) != null) {
