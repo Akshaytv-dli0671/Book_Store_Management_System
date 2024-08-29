@@ -40,4 +40,15 @@ public class Products {
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private CartItem cartItem;
 
+    @Override
+    public String toString() {
+        return "Products{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", productAuthor='" + productAuthor + '\'' +
+                ", productPrice=" + productPrice +
+                ", stock=" + stock +
+                '}';
+    }
+
 }

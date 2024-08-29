@@ -37,8 +37,16 @@ public class User {
     @NotNull(message = "Created date is required")
     private Timestamp user_created_at;
 
-    @OneToOne(mappedBy = "user")
-    private Cart cart;
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id=" + user_id +
+                ", user_name='" + user_name + '\'' +
+                ", user_email='" + user_email + '\'' +
+                ", user_created_at=" + user_created_at +
+                '}';
+    }
+
 
 
 }

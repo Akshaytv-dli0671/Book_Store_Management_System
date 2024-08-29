@@ -35,6 +35,16 @@ public class Wishlist {
 
     @OneToMany(mappedBy = "wishlist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WishlistItem> items = new ArrayList<>();
+    @Override
+    public String toString() {
+        return "Wishlist{" +
+                "wishlistId=" + wishlistId +
+                ", createdAt=" + createdAt +
+                ", user=" + user +
+                ", items=" + items +
+                '}';
+    }
+
 
 
 }

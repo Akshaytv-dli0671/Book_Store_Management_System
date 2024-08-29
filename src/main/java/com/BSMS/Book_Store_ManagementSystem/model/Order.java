@@ -1,5 +1,7 @@
 package com.BSMS.Book_Store_ManagementSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "orders_table")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +37,18 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", user=" + (user != null ? user.getUser_id() : null) +
+                ", totalAmount=" + totalAmount +
+                ", orderStatus=" + orderStatus +
+                ", createdAt=" + createdAt +
+                ", orderItems=" + (orderItems != null ? orderItems.size() : 0) +
+                '}';
+    }
 
 }
 
