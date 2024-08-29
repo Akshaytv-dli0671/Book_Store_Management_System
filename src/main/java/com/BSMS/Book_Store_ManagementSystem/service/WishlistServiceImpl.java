@@ -15,8 +15,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+import java.util.Optional;
 
 @Service
 public class WishlistServiceImpl implements WishlistService {
@@ -72,6 +71,7 @@ public class WishlistServiceImpl implements WishlistService {
     @Autowired
     private WishlistItemRepository wishlistItemsRepository;
 
+
     @Override
     public void removeWishlistItem(long id) {
         wishlistItemsRepository.deleteById(id);
@@ -79,6 +79,11 @@ public class WishlistServiceImpl implements WishlistService {
 
     public List<WishlistItem> findAllWishlistItems() {
         return wishlistItemsRepository.findAll();
+    }
+
+    @Override
+    public Optional<Wishlist> findWishlistItemsByUserId(Long userId) {
+        return wishlistRepository.findByUserId(userId);
     }
     }
 

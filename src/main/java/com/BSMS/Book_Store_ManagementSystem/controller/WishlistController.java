@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/bookstore_user")
@@ -35,5 +36,15 @@ public class WishlistController {
     @GetMapping("/get_wishlist_items")
     public ResponseEntity<List<WishlistItem>> findAllWishlistItems() {
         return new ResponseEntity<>(wishlistItemsService.findAllWishlistItems(), HttpStatus.OK);
+    }
+
+    @GetMapping("/get_wishlist_items/{userId}")
+    public ResponseEntity<Optional<Wishlist>> getWishlistItemsByUserId(@PathVariable("userId") Long userId) {
+        Optional<Wishlist> wishlist = wishlistService.findWishlistItemsByUserId(userId);
+        if (wishlist.isPresent()) {
+            return ResponseEntity.ok(wishlist);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
