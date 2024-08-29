@@ -66,7 +66,8 @@ public class SecurityConfig  {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/bookstore_user/admin/login", "/bookstore_user/admin/register").permitAll();
-                    auth.anyRequest().authenticated();
+                    auth.requestMatchers("/bookstore_user/admin/add/book", "/bookstore_user/admin/update/book", "/bookstore_user/admin/delete/book").authenticated();
+                    auth.anyRequest().permitAll();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
