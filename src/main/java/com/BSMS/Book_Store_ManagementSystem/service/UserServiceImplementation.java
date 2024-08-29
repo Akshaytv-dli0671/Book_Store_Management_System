@@ -2,8 +2,10 @@ package com.BSMS.Book_Store_ManagementSystem.service;
 
 import com.BSMS.Book_Store_ManagementSystem.exception.CustomException;
 import com.BSMS.Book_Store_ManagementSystem.model.Cart;
+import com.BSMS.Book_Store_ManagementSystem.model.Order;
 import com.BSMS.Book_Store_ManagementSystem.model.User;
 import com.BSMS.Book_Store_ManagementSystem.repository.CartRepository;
+import com.BSMS.Book_Store_ManagementSystem.repository.OrderRepository;
 import com.BSMS.Book_Store_ManagementSystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +26,9 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     CartRepository cartRepository;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     @Transactional
     @Override

@@ -30,4 +30,13 @@ public class WishlistItem {
     @JoinColumn(name = "id")
     @NotNull(message = "Product is required")
     private Products product;
+    @Override
+    public String toString() {
+        return "WishlistItem{" +
+                "wishlistItemId=" + wishlistItemId +
+                ", wishlist=" + wishlist +
+                ", product=" + product +
+                '}';
+    }
+
 }

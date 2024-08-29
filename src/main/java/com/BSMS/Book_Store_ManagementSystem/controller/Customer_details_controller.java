@@ -18,19 +18,14 @@ public class Customer_details_controller {
         return ResponseEntity.ok(createdCustomerDetails);
     }
 
-    @PatchMapping("/customer_details/{id}")
-    public ResponseEntity<Customer_Details> updateCustomerDetails(@PathVariable Long id, @RequestBody Customer_Details customerDetails) {
+    @PutMapping ("/edit_user")
+    public ResponseEntity<Customer_Details> updateCustomerDetails(@RequestBody Customer_Details customerDetails) {
         try {
-            Customer_Details updatedCustomerDetails = customerDetailsService.updateCustomerDetails(id, customerDetails);
+            Customer_Details updatedCustomerDetails = customerDetailsService.updateCustomerDetails(customerDetails);
             return ResponseEntity.ok(updatedCustomerDetails);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/customer_details/{id}")
-    public boolean getCustomerDetails(@PathVariable Long id) {
-        return customerDetailsService.DeleteCustomerDetails(id);
-    }
-
 
 }
