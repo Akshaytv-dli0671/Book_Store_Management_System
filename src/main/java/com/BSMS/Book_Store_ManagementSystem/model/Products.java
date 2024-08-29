@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @Entity
@@ -41,8 +42,8 @@ public class Products {
 
     private Timestamp updatedAt;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private CartItem cartItem;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItem;
 
     @Override
     public String toString() {

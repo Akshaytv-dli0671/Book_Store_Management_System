@@ -58,14 +58,14 @@ public class CartItemServiceImplementation implements CartItemService{
             return ResponseEntity.badRequest().body("Cart item not found");
         }
 
-        CartItem cartItem = cartItemOpt.getProduct().getCartItem();
-        Products product = cartItem.getProduct();
+
+        Products product = cartItemOpt.getProduct();
         if (product.getStock() < quantity) {
             return ResponseEntity.badRequest().body("Insufficient stock");
         }
 
-        cartItem.setQuantity(quantity);
-        cartItemRepository.save(cartItem);
+        cartItemOpt.setQuantity(quantity);
+        cartItemRepository.save(cartItemOpt);
 
         return ResponseEntity.ok("Cart item quantity updated");
     }

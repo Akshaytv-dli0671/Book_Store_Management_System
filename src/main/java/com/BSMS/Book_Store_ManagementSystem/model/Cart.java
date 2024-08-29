@@ -30,7 +30,7 @@ public class Cart {
     @NotNull(message = "Created date is required")
     private Timestamp cart_created_at;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cart")
     private List<CartItem> cartItems;
 
     @Override

@@ -30,46 +30,54 @@ public class OrderServiceImplementation implements  OrderService{
     @Transactional
     @Override
     public Order placeOrder(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        Cart cart = cartRepository.findByUserId(userId);
-        List<OrderItem> orderItems = new ArrayList<>();
+            User user = userRepository.findById(userId).orElse(null);
+            Cart cart = cartRepository.findByUserId(userId);
 
-        for (CartItem cartItem : cart.getCartItems()) {
-            OrderItem orderItem = new OrderItem();
-            Products product = cartItem.getProduct();
-            orderItem.setProduct(product);
-            orderItem.setQuantity(cartItem.getQuantity());
-            orderItem.setPrice(BigDecimal.valueOf(product.getProductPrice()));
-            orderItems.add(orderItem);
-        }
+            if (user == null || cart == null) {
+                throw new IllegalArgumentException("User or Cart not found");
+            }
 
-        BigDecimal totalAmount = BigDecimal.ZERO;
-        for (OrderItem item : orderItems) {
-            totalAmount = totalAmount.add(item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
-        }
+            Order order = new Order();
+            order.setUser(user);
+            List<OrderItem> orderItems = new ArrayList<>();
 
-        Order order = new Order();
-        order.setUser(user);
-        order.setTotalAmount(totalAmount);
-        order.setOrderStatus(OrderStatus.PENDING);
-        order.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+            for (CartItem cartItem : cart.getCartItems()) {
+                OrderItem orderItem = new OrderItem();
+                Products product = cartItem.getProduct();
+                orderItem.setProduct(product);
+                orderItem.setQuantity(cartItem.getQuantity());
+                product.setStock(product.getStock()- cartItem.getQuantity());
+                orderItem.setPrice(BigDecimal.valueOf(product.getProductPrice()));
+                orderItems.add(orderItem);
+                cartItemRepository.delete(cartItem);
+                cartItemRepository.flush();
+            }
+
+            BigDecimal totalAmount = BigDecimal.ZERO;
+            for (OrderItem item : orderItems) {
+                totalAmount = totalAmount.add(item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
+            }
+
+            order.setTotalAmount(totalAmount);
+            order.setOrderStatus(OrderStatus.PENDING);
+            order.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+
+            order = orderRepository.save(order);
+
+            for (OrderItem orderItem : orderItems) {
+                orderItem.setOrder(order);
+                orderItemRepository.save(orderItem);
+            }
+
+            order.setOrderItems(orderItems);
+            order = orderRepository.save(order);
 
 
-        order = orderRepository.save(order);
-
-        for (OrderItem orderItem : orderItems) {
-            orderItem.setOrder(order);
-            orderItemRepository.save(orderItem);
-        }
-
-        order.setOrderItems(orderItems);
-        order = orderRepository.save(order);
-
-        cartItemRepository.deleteAll(cart.getCartItems());
+        cart.setCartItems(new ArrayList<>());
+        cartRepository.save(cart);
 
         return order;
-    }
-
+        }
 
 
 }

@@ -19,11 +19,11 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cartItem_id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id", nullable = false)
     private Products product;
 
