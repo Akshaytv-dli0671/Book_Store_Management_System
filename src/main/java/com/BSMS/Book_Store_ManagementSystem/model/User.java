@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,17 +26,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_id;
 
-//    @NotNull(message = "User Name is required")
+    @NotNull(message = "User Name is required")
     @Column(unique = true)
     private String user_name;
 
-//    @NotNull(message = "User Email is required")
+    @NotNull(message = "User Email is required")
     private String user_email;
 
-//    @NotNull(message = "User Password is required")
+
+    @NotNull(message = "User Password is required")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
+    @Pattern(regexp = "^[A-Za-z0-9]*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*$", message = "Password must contain at least one special character")
     private String user_password;
 
-//    @NotNull(message = "Created date is required")
+
     private Timestamp user_created_at;
 
     @Override

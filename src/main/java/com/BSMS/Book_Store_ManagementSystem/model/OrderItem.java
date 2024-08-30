@@ -26,7 +26,6 @@ public class OrderItem {
     @JoinColumn(name = "product_id", nullable = false)
     private Products product;
 
-
     private Integer quantity;
 
     private BigDecimal price;

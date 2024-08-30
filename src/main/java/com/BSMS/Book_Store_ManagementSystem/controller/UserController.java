@@ -5,8 +5,12 @@ import com.BSMS.Book_Store_ManagementSystem.model.User;
 import com.BSMS.Book_Store_ManagementSystem.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.Collections;
 
 @RestController
 @CrossOrigin
@@ -22,13 +26,19 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@Valid @RequestBody Logindto logindto) {
-        boolean isAuthenticated = userService.loginUser(logindto.getUsername(),logindto.getPassword());
-        System.out.println(isAuthenticated);
-        if (isAuthenticated) {
-            return ResponseEntity.ok("Login successful");
+        String token = userService.loginUser(logindto.getUsername(),logindto.getPassword());
+        return ResponseEntity.ok(Collections.singletonMap("token",token));
+    }
+
+    @PostMapping("/verification/{token}")
+    public ResponseEntity<?> userVerification(@PathVariable String token) {
+        boolean isVerified = userService.verifyToken(token);
+        if (isVerified) {
+            return ResponseEntity.ok("User account verified successfully!");
         } else {
-            throw  new CustomException("Invalid User name or password");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or expired token.");
         }
     }
+
 
 }
