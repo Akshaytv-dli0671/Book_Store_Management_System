@@ -32,6 +32,7 @@ public class Admin {
 
     @NotNull(message = "Password is mandatory")
     @Size(min = 8, message = "Password must be at least 8 characters long")
+    @Pattern(regexp = "^[A-Za-z0-9]*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*$", message = "Password must contain at least one special character")
     private String adminPassword;
 
     @NotNull(message = "created_at is mandatory")

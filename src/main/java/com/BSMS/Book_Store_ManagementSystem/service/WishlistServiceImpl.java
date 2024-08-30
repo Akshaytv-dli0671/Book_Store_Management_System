@@ -73,8 +73,8 @@ public class WishlistServiceImpl implements WishlistService {
 
 
     @Override
-    public void removeWishlistItem(long id) {
-        wishlistItemsRepository.deleteById(id);
+    public void removeWishlistItem(long wishlistItemId) {
+        wishlistItemsRepository.deleteById(wishlistItemId);
     }
 
     public List<WishlistItem> findAllWishlistItems() {
@@ -85,5 +85,10 @@ public class WishlistServiceImpl implements WishlistService {
     public Optional<Wishlist> findWishlistItemsByUserId(Long userId) {
         return wishlistRepository.findByUserId(userId);
     }
+
+    @Override
+    public WishlistItem findWishlistItemById(Long wishlistItemId) {
+        return wishlistItemsRepository.findByWishlistItemId(wishlistItemId);
     }
+}
 

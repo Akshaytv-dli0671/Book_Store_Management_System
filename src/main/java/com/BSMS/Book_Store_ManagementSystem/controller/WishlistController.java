@@ -27,10 +27,14 @@ public class WishlistController {
     @Autowired
     private WishlistService wishlistItemsService;
 
-    @DeleteMapping("/remove_wishlist_item")
-    public ResponseEntity<String> removeWishlistItem(@RequestParam Long id) {
-        wishlistItemsService.removeWishlistItem(id);
+    @DeleteMapping("/remove_wishlist_item/{wishlistId}")
+    public ResponseEntity<String> removeWishlistItem(@PathVariable("wishlistId") Long wishlistItemId) {
+        if (wishlistItemsService.findWishlistItemById(wishlistItemId)==null) {
+            return new ResponseEntity<>("Wishlist item not found", HttpStatus.NOT_FOUND);
+        }else {
+        wishlistItemsService.removeWishlistItem(wishlistItemId);
         return new ResponseEntity<>("Wishlist item removed successfully", HttpStatus.OK);
+        }
     }
 
     @GetMapping("/get_wishlist_items")
