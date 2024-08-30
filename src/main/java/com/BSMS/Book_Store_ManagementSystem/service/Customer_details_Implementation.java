@@ -20,9 +20,12 @@ public class Customer_details_Implementation implements Customer_details_Service
         long userId=customerDetails.getUser().getUser_id();
         Customer_Details customer_details=customerDetailsRepository.findbyUserID(userId);
         if(customer_details==null){
+
             return customerDetailsRepository.save(customerDetails);
+
         }
         else{
+
             throw new CustomException("Customer details already saved! You can update the current details.");
         }
 
