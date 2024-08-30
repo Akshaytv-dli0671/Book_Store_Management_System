@@ -19,8 +19,7 @@ import java.sql.Timestamp;
 public class Feedback {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull(message = "Id can't be null")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long feedbackId;
 
     @NotNull

@@ -19,13 +19,21 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cartItem_id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = false)
     private Products product;
 
     private int quantity;
+
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "cartItem_id=" + cartItem_id +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

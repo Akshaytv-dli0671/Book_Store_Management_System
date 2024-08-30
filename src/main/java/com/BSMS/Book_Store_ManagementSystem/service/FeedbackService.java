@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface FeedbackService {
 
-    Feedback addFeedback(long productId , Feedback feedback);
+    Feedback addFeedback(long ProductId , Feedback feedback);
 }
 

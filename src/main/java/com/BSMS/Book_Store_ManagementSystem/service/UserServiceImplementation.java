@@ -2,8 +2,10 @@ package com.BSMS.Book_Store_ManagementSystem.service;
 
 import com.BSMS.Book_Store_ManagementSystem.exception.CustomException;
 import com.BSMS.Book_Store_ManagementSystem.model.Cart;
+import com.BSMS.Book_Store_ManagementSystem.model.Order;
 import com.BSMS.Book_Store_ManagementSystem.model.User;
 import com.BSMS.Book_Store_ManagementSystem.repository.CartRepository;
+import com.BSMS.Book_Store_ManagementSystem.repository.OrderRepository;
 import com.BSMS.Book_Store_ManagementSystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -25,9 +28,13 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     CartRepository cartRepository;
 
+    @Autowired
+    OrderRepository orderRepository;
+
     @Transactional
     @Override
     public User registerUser(User user) {
+        user.setUser_created_at(Timestamp.valueOf(LocalDateTime.now()));
         user.setUser_password(passwordEncoder.encode(user.getUser_password()));
         String username = user.getUser_name();
         if (userRepository.findByUsername(username) != null) {

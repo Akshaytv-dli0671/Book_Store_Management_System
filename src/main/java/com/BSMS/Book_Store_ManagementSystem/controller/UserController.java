@@ -1,4 +1,5 @@
 package com.BSMS.Book_Store_ManagementSystem.controller;
+import com.BSMS.Book_Store_ManagementSystem.dto.Logindto;
 import com.BSMS.Book_Store_ManagementSystem.exception.CustomException;
 import com.BSMS.Book_Store_ManagementSystem.model.User;
 import com.BSMS.Book_Store_ManagementSystem.service.UserService;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/bookstore_user")
 public class UserController {
     @Autowired
@@ -19,8 +21,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestParam String username, @RequestParam String password) {
-        boolean isAuthenticated = userService.loginUser(username, password);
+    public ResponseEntity<?> loginUser(@Valid @RequestBody Logindto logindto) {
+        boolean isAuthenticated = userService.loginUser(logindto.getUsername(),logindto.getPassword());
         System.out.println(isAuthenticated);
         if (isAuthenticated) {
             return ResponseEntity.ok("Login successful");
@@ -28,8 +30,5 @@ public class UserController {
             throw  new CustomException("Invalid User name or password");
         }
     }
-
-
-
 
 }

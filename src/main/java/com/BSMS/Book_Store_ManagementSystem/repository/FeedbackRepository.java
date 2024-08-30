@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
 
-    @Query("select f from Feedback f where f.user.user_id =:user_id")
-    Feedback findByUserId(long user_id);
+ @Query("select f from Feedback f where f.user.user_id =:user_id")
+ Feedback findByUserId(long user_id);
 }
 
+ 

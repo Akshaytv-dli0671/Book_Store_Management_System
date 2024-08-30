@@ -19,7 +19,7 @@ public class Customer_Details {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customer_details_id;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     private String name;

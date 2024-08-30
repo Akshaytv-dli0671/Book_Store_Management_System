@@ -4,13 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="products_table")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Products {
@@ -18,17 +23,17 @@ public class Products {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+//    @NotNull
     private String productName;
 
     private String productDescription;
 
     private double productPrice;
 
-    @NotNull
+//    @NotNull
     private String productAuthor;
 
-    @NotNull
+//    @NotNull
     private int stock;
 
     private String productCategory;
@@ -37,7 +42,18 @@ public class Products {
 
     private Timestamp updatedAt;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private CartItem cartItem;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItem;
+
+    @Override
+    public String toString() {
+        return "Products{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", productAuthor='" + productAuthor + '\'' +
+                ", productPrice=" + productPrice +
+                ", stock=" + stock +
+                '}';
+    }
 
 }

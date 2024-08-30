@@ -1,5 +1,7 @@
 package com.BSMS.Book_Store_ManagementSystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -15,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "cart_table")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "cart_id")
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,10 +30,16 @@ public class Cart {
     @NotNull(message = "Created date is required")
     private Timestamp cart_created_at;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cart")
     private List<CartItem> cartItems;
 
-
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "cart_id=" + cart_id +
+                ", cart_created_at=" + cart_created_at +
+                '}';
+    }
 
 
 }

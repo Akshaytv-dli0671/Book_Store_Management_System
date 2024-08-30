@@ -24,21 +24,29 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long user_id;
 
-    @NotNull(message = "User Name is required")
+//    @NotNull(message = "User Name is required")
     @Column(unique = true)
     private String user_name;
 
-    @NotNull(message = "User Email is required")
+//    @NotNull(message = "User Email is required")
     private String user_email;
 
-    @NotNull(message = "User Password is required")
+//    @NotNull(message = "User Password is required")
     private String user_password;
 
-    @NotNull(message = "Created date is required")
+//    @NotNull(message = "Created date is required")
     private Timestamp user_created_at;
 
-    @OneToOne(mappedBy = "user")
-    private Cart cart;
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id=" + user_id +
+                ", user_name='" + user_name + '\'' +
+                ", user_email='" + user_email + '\'' +
+                ", user_created_at=" + user_created_at +
+                '}';
+    }
+
 
 
 }

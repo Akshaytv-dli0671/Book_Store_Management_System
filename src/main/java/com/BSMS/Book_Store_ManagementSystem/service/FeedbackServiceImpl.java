@@ -29,7 +29,7 @@ public class FeedbackServiceImpl implements FeedbackService{
                 .orElseThrow(() -> new CustomInvalidException("Product not found"));
 
 
-       Feedback feedback1 = new Feedback(feedback.getRating(), feedback.getText(),feedback.getCreatedAt(), user,product);
+        Feedback feedback1 = new Feedback(feedback.getRating(), feedback.getText(),feedback.getCreatedAt(), user,product);
 
         return feedbackRepository.save(feedback1);
 

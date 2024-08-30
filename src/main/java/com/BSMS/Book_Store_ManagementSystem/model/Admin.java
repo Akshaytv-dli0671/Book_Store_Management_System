@@ -32,4 +32,6 @@ public class Admin {
     @NotNull(message = "created_at is mandatory")
     private Timestamp created_at;
 
+
+
 }
