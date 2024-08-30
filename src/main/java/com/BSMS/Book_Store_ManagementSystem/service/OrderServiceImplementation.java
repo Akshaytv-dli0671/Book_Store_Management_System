@@ -26,6 +26,8 @@ public class OrderServiceImplementation implements  OrderService{
     CartItemRepository cartItemRepository;
     @Autowired
     OrderItemRepository orderItemRepository;
+    @Autowired
+    ProductRepository productRepository;
 
     @Transactional
     @Override
@@ -47,6 +49,7 @@ public class OrderServiceImplementation implements  OrderService{
                 orderItem.setProduct(product);
                 orderItem.setQuantity(cartItem.getQuantity());
                 product.setStock(product.getStock()- cartItem.getQuantity());
+                productRepository.save(product);
                 orderItem.setPrice(BigDecimal.valueOf(product.getProductPrice()));
                 orderItems.add(orderItem);
                 cartItemRepository.delete(cartItem);

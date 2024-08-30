@@ -7,7 +7,11 @@ import com.BSMS.Book_Store_ManagementSystem.model.User;
 import com.BSMS.Book_Store_ManagementSystem.repository.CartRepository;
 import com.BSMS.Book_Store_ManagementSystem.repository.OrderRepository;
 import com.BSMS.Book_Store_ManagementSystem.repository.UserRepository;
+import com.BSMS.Book_Store_ManagementSystem.util.JwtUtil;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +35,9 @@ public class UserServiceImplementation implements UserService {
     @Autowired
     OrderRepository orderRepository;
 
+    @Autowired
+    JwtUtil jwtUtil;
+
     @Transactional
     @Override
     public User registerUser(User user) {
@@ -49,10 +56,29 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public boolean loginUser(String username, String password) {
+    public String loginUser(String username, String password) {
         User user = userRepository.findByUsername(username);
         if (user != null) {
-            return passwordEncoder.matches(password, user.getUser_password());
+            if(passwordEncoder.matches(password, user.getUser_password()))
+            {
+                return jwtUtil.generateToken(user.getUser_name());
+            }
+            else
+            {
+                throw new BadCredentialsException("Invalid Credentials!");
+            }
+        }
+        else
+            throw new CustomException("User not found!");
+    }
+
+    @Override
+    public boolean verifyToken(String token) {
+        String username = jwtUtil.extractUsername(token);
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(username));
+
+        if (userOptional.isPresent()) {
+            return jwtUtil.validateToken(token,username);
         }
         return false;
     }
