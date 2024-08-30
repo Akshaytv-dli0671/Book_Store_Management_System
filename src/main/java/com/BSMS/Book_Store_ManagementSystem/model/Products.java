@@ -42,7 +42,7 @@ public class Products {
 
     private Timestamp updatedAt;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<CartItem> cartItem;
 
     @Override
