@@ -1,7 +1,9 @@
 package com.BSMS.Book_Store_ManagementSystem.controller;
 
+import com.BSMS.Book_Store_ManagementSystem.model.Products;
 import com.BSMS.Book_Store_ManagementSystem.model.Wishlist;
 import com.BSMS.Book_Store_ManagementSystem.model.WishlistItem;
+import com.BSMS.Book_Store_ManagementSystem.repository.WishlistRepository;
 import com.BSMS.Book_Store_ManagementSystem.service.WishlistService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class WishlistController {
     @Autowired
     private WishlistService wishlistService;
+
 
     @PostMapping("/add_wish_list")
     public ResponseEntity<Wishlist> AddproducttoWishlist(@RequestParam Long user_id, @RequestParam Long id) {

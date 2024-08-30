@@ -17,4 +17,6 @@ public interface WishlistService {
      Optional<Wishlist> findWishlistItemsByUserId(Long userId);
 
         WishlistItem findWishlistItemById(Long wishlistItemId);
+
+
 }

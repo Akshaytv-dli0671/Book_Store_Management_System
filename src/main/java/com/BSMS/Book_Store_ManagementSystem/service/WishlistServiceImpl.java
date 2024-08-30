@@ -31,7 +31,6 @@ public class WishlistServiceImpl implements WishlistService {
 
     @Autowired
     private UserRepository userRepository;
-
     @Override
     public Wishlist AddproducttoWishlist(Long user_id, Long id) {
         Wishlist wishlist = wishlistRepository.findByUserId(user_id)
@@ -48,24 +47,24 @@ public class WishlistServiceImpl implements WishlistService {
                 .orElseThrow(() -> new ProductNotFoundException("User not found"));
 
         wishlist.setUser(user);
-
-        // Save the wishlist first
         wishlist = wishlistRepository.save(wishlist);
+        boolean productExists = wishlist.getItems().stream()
+                .anyMatch(item -> item.getProduct().getId().equals(id));
+
+        if (productExists) {
+            throw new ProductNotFoundException("Product already in wishlist");
+        }
 
         WishlistItem wishlistItem = new WishlistItem();
         wishlistItem.setProduct(product);
         wishlistItem.setWishlist(wishlist);
-
-        // Save the wishlist item
         wishlistItemRepository.save(wishlistItem);
-
         wishlist.getItems().add(wishlistItem);
-
-        // Save the wishlist again to update the items list
         wishlistRepository.save(wishlist);
 
         return wishlist;
     }
+
 
 
     @Autowired
@@ -90,5 +89,8 @@ public class WishlistServiceImpl implements WishlistService {
     public WishlistItem findWishlistItemById(Long wishlistItemId) {
         return wishlistItemsRepository.findByWishlistItemId(wishlistItemId);
     }
+
+
+
 }
 
